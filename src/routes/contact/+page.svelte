@@ -1,7 +1,9 @@
 <script lang="ts">
+	import { GITHUB_PAGES } from '$app/env/public';
 	import { enhance } from '$app/forms';
 	import Field from '#lib/components/Field.svelte';
 	import Notice from '#lib/components/Notice.svelte';
+	import { chamberApp } from '#lib/site.ts';
 	import { generalWhatsappMessage, whatsappHref } from '#lib/whatsapp.ts';
 	import type { PageProps } from './$types';
 
@@ -16,11 +18,19 @@
 <p class="text-xs font-semibold tracking-[0.18em] text-brass uppercase">Contact</p>
 <h1 class="mt-3 font-serif text-5xl">Discuss a matter</h1>
 <p class="mt-4 max-w-2xl text-lg text-ink-soft">
-	Send the outline of the matter. The chamber reads every inquiry. This form does not create a lawyer-client relationship.
+	{#if GITHUB_PAGES}
+		The chamber reads every inquiry. Send it through the chamber application. This page does not create a lawyer-client relationship.
+	{:else}
+		Send the outline of the matter. The chamber reads every inquiry. This form does not create a lawyer-client relationship.
+	{/if}
 </p>
 
 <div class="mt-10 grid gap-12 lg:grid-cols-[1.2fr_0.8fr]">
-	{#if form?.success}
+	{#if GITHUB_PAGES}
+		<p>
+			<a class="btn" href="{chamberApp}/contact">Send an inquiry</a>
+		</p>
+	{:else if form?.success}
 		<p class="border border-line bg-card p-6 text-lg" role="status">
 			The inquiry is with the chamber. Someone will reply using the details you left.
 		</p>

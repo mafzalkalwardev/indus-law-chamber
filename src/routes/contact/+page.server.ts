@@ -4,7 +4,9 @@ import { db } from '#lib/server/db/index.ts';
 import { inquiry } from '#lib/server/db/schema.ts';
 import { looksLikeEmail, textField } from '#lib/text.ts';
 
-export const actions: Actions = {
+export const prerender = process.env.GITHUB_PAGES === 'true';
+
+export const actions: Actions | undefined = process.env.GITHUB_PAGES === 'true' ? undefined : {
 	default: async ({ request }) => {
 		const form = await request.formData();
 		if (textField(form, 'website', 200)) return { success: true };

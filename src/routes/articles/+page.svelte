@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	import { formatDate } from '#lib/text.ts';
 	import type { PageProps } from './$types';
 
@@ -18,7 +19,7 @@
 	<ul class="mt-8">
 		{#each data.articles as article (article.id)}
 			<li class="border-t border-line py-6">
-				<a href="/articles/{article.slug}" class="block max-w-2xl hover:text-brass">
+				<a href={resolve('/articles/[slug]', { slug: article.slug })} class="block max-w-2xl hover:text-brass">
 					<h2 class="font-serif text-3xl">{article.title}</h2>
 					{#if article.excerpt}
 						<p class="mt-2 text-ink-soft">{article.excerpt}</p>

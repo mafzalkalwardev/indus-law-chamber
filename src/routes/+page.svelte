@@ -1,4 +1,7 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
+	import { GITHUB_PAGES } from '$app/env/public';
+	import { chamberApp } from '#lib/site.ts';
 	import { formatDate } from '#lib/text.ts';
 	import type { PageProps } from './$types';
 
@@ -19,14 +22,14 @@
 		<p class="mt-6 max-w-xl text-xl leading-relaxed text-ink-soft">{data.settings.aboutIntro}</p>
 		<p class="mt-4 text-lg">Principal, {data.settings.principalName}</p>
 		<div class="mt-8 flex flex-wrap gap-3">
-			<a class="btn" href="/contact">Discuss a matter</a>
-			<a class="btn btn-line" href="/request-access">Request library access</a>
+			<a class="btn" href={resolve('/contact')}>Discuss a matter</a>
+			<a class="btn btn-line" href={GITHUB_PAGES ? `${chamberApp}/request-access` : resolve('/request-access')}>Request library access</a>
 		</div>
 	</div>
 	<ol class="lg:col-span-5">
 		{#each data.areas as area, index (area.id)}
 			<li class="border-t border-line py-4">
-				<a class="group grid grid-cols-[auto_1fr] gap-4" href="/practice">
+				<a class="group grid grid-cols-[auto_1fr] gap-4" href={resolve('/practice')}>
 					<span class="font-serif text-brass">0{index + 1}</span>
 					<span>
 						<span class="block font-serif text-2xl group-hover:text-brass">{area.title}</span>
@@ -51,7 +54,7 @@
 			<ul>
 				{#each data.articles as article (article.id)}
 					<li class="border-t border-line py-4">
-						<a href="/articles/{article.slug}" class="block hover:text-brass">
+						<a href={resolve('/articles/[slug]', { slug: article.slug })} class="block hover:text-brass">
 							<span class="font-serif text-2xl">{article.title}</span>
 							{#if article.publishedAt}
 								<span class="mt-1 block text-sm text-ink-soft">{formatDate(article.publishedAt)}</span>
@@ -60,7 +63,7 @@
 					</li>
 				{/each}
 			</ul>
-			<p class="mt-4"><a class="text-brass underline" href="/articles">All articles</a></p>
+			<p class="mt-4"><a class="text-brass underline" href={resolve('/articles')}>All articles</a></p>
 		{/if}
 	</div>
 </section>

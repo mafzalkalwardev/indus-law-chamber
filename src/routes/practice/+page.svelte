@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
@@ -23,4 +24,4 @@
 	{/each}
 </ul>
 
-<p class="mt-10"><a class="btn" href="/contact">Discuss a matter</a></p>
+<p class="mt-10"><a class="btn" href={resolve('/contact')}>Discuss a matter</a></p>

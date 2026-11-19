@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	import { formatDate, paragraphs } from '#lib/text.ts';
 	import type { PageProps } from './$types';
 
@@ -12,7 +13,7 @@
 	{/if}
 </svelte:head>
 
-<p class="text-sm"><a class="text-brass underline" href="/articles">Articles</a></p>
+<p class="text-sm"><a class="text-brass underline" href={resolve('/articles')}>Articles</a></p>
 <h1 class="mt-4 max-w-3xl font-serif text-5xl leading-tight">{data.article.title}</h1>
 {#if data.article.publishedAt}
 	<p class="mt-3 text-ink-soft">{formatDate(data.article.publishedAt)}</p>

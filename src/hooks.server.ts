@@ -9,7 +9,7 @@ import { seed } from '#lib/server/seed.ts';
 import { svelteKitHandler } from 'better-auth/svelte-kit';
 
 const handleBetterAuth: Handle = async ({ event, resolve }) => {
-	if (!building) await seed();
+	if (!building || process.env.GITHUB_PAGES === 'true') await seed();
 
 	const session = await auth.api.getSession({ headers: event.request.headers });
 	if (session) {

@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
+
 	let {
 		settings
 	}: {
@@ -34,7 +36,7 @@
 			<ul class="mt-3 space-y-1">
 				{#if settings.phone}<li>{settings.phone}</li>{/if}
 				{#if settings.email}<li><a class="underline decoration-brass-bright" href="mailto:{settings.email}">{settings.email}</a></li>{/if}
-				<li><a class="underline decoration-brass-bright" href="/contact">Write to the chamber</a></li>
+				<li><a class="underline decoration-brass-bright" href={resolve('/contact')}>Write to the chamber</a></li>
 			</ul>
 		</div>
 	</div>

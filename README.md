@@ -6,7 +6,9 @@ The public pages introduce the chamber and take inquiries. Approved accounts can
 
 This site does not copy or sync Pakistan Law Site.
 
-The public site runs on the Oracle VPS at https://induslaw.89.168.127.135.nip.io. Sign-in, inquiries, and the client portal need that Node process. They do not run on GitHub Pages.
+The public pages are on GitHub Pages at https://mafzalkalwardev.github.io/indus-law-chamber/.
+
+Sign-in, stored inquiries, and the client portal run on the Oracle VPS at https://induslaw.89.168.127.135.nip.io. GitHub Pages only serves the public pages.
 
 ## Setup
 

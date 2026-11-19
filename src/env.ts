@@ -20,5 +20,11 @@ export const variables = defineEnvVars({
 	ADMIN_NAME: {
 		description: 'Display name for the first admin account.',
 		schema: (value) => value?.trim() || 'Adv. Mahfil Hussain Kalwar'
+	},
+	GITHUB_PAGES: {
+		public: true,
+		static: true,
+		description: 'True only for the static GitHub Pages build.',
+		schema: (value) => value === 'true'
 	}
 });

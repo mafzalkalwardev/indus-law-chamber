@@ -1,5 +1,8 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
+	import { GITHUB_PAGES } from '$app/env/public';
+	import { chamberApp } from '#lib/site.ts';
 	import { isStaffRole, type PublicUser } from '#lib/roles.ts';
 
 	let { user }: { user: PublicUser | null } = $props();
@@ -10,23 +13,24 @@
 		{ href: '/team', label: 'Team' },
 		{ href: '/articles', label: 'Articles' },
 		{ href: '/contact', label: 'Contact' }
-	];
+	] as const;
 
 	function current(href: string) {
-		return page.url.pathname === href || page.url.pathname.startsWith(`${href}/`);
+		const id = page.route.id ?? '';
+		return id === href || id.startsWith(`${href}/`);
 	}
 </script>
 
 <header class="border-b border-line bg-paper">
 	<div class="mx-auto flex max-w-6xl flex-wrap items-end justify-between gap-4 px-5 py-5">
-		<a href="/" class="block">
+		<a href={resolve('/')} class="block">
 			<span class="block font-serif text-2xl leading-none text-ink">Indus Law Chamber</span>
 			<span class="mt-1 block text-xs tracking-[0.18em] text-brass uppercase">Advocates</span>
 		</a>
 		<nav class="flex flex-wrap gap-x-5 gap-y-2 text-[0.98rem]" aria-label="Primary">
 			{#each links as link (link.href)}
 				<a
-					href={link.href}
+					href={resolve(link.href)}
 					class={current(link.href) ? 'text-brass' : 'text-ink hover:text-brass'}
 					aria-current={current(link.href) ? 'page' : undefined}
 				>
@@ -35,14 +39,14 @@
 			{/each}
 			{#if user}
 				<a
-					href="/research"
+					href={resolve('/research')}
 					class={current('/research') ? 'text-brass' : 'text-ink hover:text-brass'}
 					aria-current={current('/research') ? 'page' : undefined}
 				>
 					Research
 				</a>
 				<a
-					href="/matters"
+					href={resolve('/matters')}
 					class={current('/matters') ? 'text-brass' : 'text-ink hover:text-brass'}
 					aria-current={current('/matters') ? 'page' : undefined}
 				>
@@ -50,7 +54,7 @@
 				</a>
 				{#if isStaffRole(user.role)}
 					<a
-						href="/desk"
+						href={resolve('/desk')}
 						class={current('/desk') ? 'text-brass' : 'text-ink hover:text-brass'}
 						aria-current={current('/desk') ? 'page' : undefined}
 					>
@@ -62,12 +66,12 @@
 		<div class="flex items-center gap-3 text-sm">
 			{#if user}
 				<span class="text-ink-soft">{user.name}</span>
-				<form method="post" action="/logout">
+				<form method="post" action={resolve('/logout')}>
 					<button class="btn btn-line btn-small" type="submit">Sign out</button>
 				</form>
 			{:else}
-				<a class="text-ink hover:text-brass" href="/login">Sign in</a>
-				<a class="btn btn-small" href="/request-access">Request access</a>
+				<a class="text-ink hover:text-brass" href={GITHUB_PAGES ? `${chamberApp}/login` : resolve('/login')}>Sign in</a>
+				<a class="btn btn-small" href={GITHUB_PAGES ? `${chamberApp}/request-access` : resolve('/request-access')}>Request access</a>
 			{/if}
 		</div>
 	</div>

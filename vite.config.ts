@@ -1,7 +1,11 @@
+import process from 'node:process';
 import tailwindcss from '@tailwindcss/vite';
-import adapter from '@sveltejs/adapter-node';
+import adapterNode from '@sveltejs/adapter-node';
+import adapterStatic from '@sveltejs/adapter-static';
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
+
+const pages = process.env.GITHUB_PAGES === 'true';
 
 export default defineConfig({
 	plugins: [
@@ -12,7 +16,8 @@ export default defineConfig({
 				runes: ({ filename }) =>
 					filename.split(/[/\\]/).includes('node_modules') ? undefined : true
 			},
-			adapter: adapter()
+			adapter: pages ? adapterStatic({ fallback: '404.html' }) : adapterNode(),
+			paths: pages ? { base: process.env.BASE_PATH || '/indus-law-chamber' } : undefined
 		})
 	]
 });
